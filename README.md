@@ -1,5 +1,5 @@
 # ESRGAN-TensorFlow
-Implementation of ESRGAN using Tensorflow
+Implementation of ESRGAN using Tensorflow.
 
 original paper: https://arxiv.org/abs/1809.00219
 
