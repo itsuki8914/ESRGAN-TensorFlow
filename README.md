@@ -86,7 +86,7 @@ python convert.py
 ...
 ```
 
-3. Train SRGAN.
+3. Train ESRGAN.
 
 ```
 python main.py
