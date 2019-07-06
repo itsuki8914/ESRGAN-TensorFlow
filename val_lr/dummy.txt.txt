@@ -1,0 +1,2 @@
+locate downloaded dataset Validation Data Track 1 bicubic downscaling x4 (LR images).
+After located images, Remove this file.
