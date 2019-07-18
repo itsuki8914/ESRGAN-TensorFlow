@@ -20,7 +20,7 @@ def main(folder="test"):
         os.makedirs(OUT_DIR)
     folder=folder
     files = os.listdir(folder)
-    img_size = 300
+    img_size = 360
     bs =8
     val_size =2
 
