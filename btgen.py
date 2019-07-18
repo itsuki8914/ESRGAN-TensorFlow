@@ -11,13 +11,13 @@ class BatchGenerator:
         self.LRImages = [cv2.imread(img_path) for img_path in self.LRPath]
         self.HRImages = [cv2.imread(img_path) for img_path in self.HRPath]
         print("%.4f sec took reading"%(time.time()-start))
-        for i,j in enumerate(self.LRImages):
-            y = self.LRImages[i].shape[0]
-            x = self.LRImages[i].shape[1]
-            Y = self.HRImages[i].shape[0]
-            X = self.HRImages[i].shape[1]
-            if x*4!=X or y*4!=Y:
-                print(i)
+        #for i,j in enumerate(self.LRImages):
+        #    y = self.LRImages[i].shape[0]
+        #    x = self.LRImages[i].shape[1]
+        #    Y = self.HRImages[i].shape[0]
+        #    X = self.HRImages[i].shape[1]
+        #    if x*4!=X or y*4!=Y:
+        #        print(i)
 
         #self.orgSize = (218,173)
         self.LRSize = (img_size,img_size)
