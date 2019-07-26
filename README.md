@@ -104,9 +104,9 @@ example:
 ├── pred.py
 ├── modelGAN
 │     ├── checkpoint
-│     ├── model.ckpt-50000
-│     ├── model.ckpt-50000
-│     └── model.ckpt-50000
+│     ├── model.ckpt-100000
+│     ├── model.ckpt-100000
+│     └── model.ckpt-100000
 ├── test
 │     ├── yourpic1.png
 │     ├── favpic.jpg
