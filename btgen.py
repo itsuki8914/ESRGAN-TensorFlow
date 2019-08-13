@@ -11,15 +11,7 @@ class BatchGenerator:
         self.LRImages = [cv2.imread(img_path) for img_path in self.LRPath]
         self.HRImages = [cv2.imread(img_path) for img_path in self.HRPath]
         print("%.4f sec took reading"%(time.time()-start))
-        #for i,j in enumerate(self.LRImages):
-        #    y = self.LRImages[i].shape[0]
-        #    x = self.LRImages[i].shape[1]
-        #    Y = self.HRImages[i].shape[0]
-        #    X = self.HRImages[i].shape[1]
-        #    if x*4!=X or y*4!=Y:
-        #        print(i)
 
-        #self.orgSize = (218,173)
         self.LRSize = (img_size,img_size)
         self.HRSize = (img_size*4,img_size*4)
         self.datalen = len(self.LRPath)
@@ -29,7 +21,6 @@ class BatchGenerator:
         assert self.LRSize[0]==self.LRSize[1]
 
     def augment(self, img_x, img_y):
-        #print(img_y.shape)
         rand = np.random.rand()
         if rand > .5:
             img_x = cv2.flip(img_x,0)
@@ -58,13 +49,11 @@ class BatchGenerator:
         return img_x, img_y
 
     def crop(self, img_x, img_y):
-        #print(img_y.shape)
         h, w = img_x.shape[:2]
         x = np.random.randint(0, w - self.LRSize[1]-1)
         y = np.random.randint(0, h - self.LRSize[0]-1)
         new_x = img_x[y:y+self.LRSize[0], x:x+self.LRSize[1]]
         new_y = img_y[y*4:y*4+self.HRSize[0], x*4:x*4+self.HRSize[1]]
-        #print(new_y.shape)
         return new_x, new_y
 
     def getBatch(self, bs):
@@ -75,12 +64,7 @@ class BatchGenerator:
 
             img_lr = self.LRImages[j]
             img_hr = self.HRImages[j]
-            #print(self.LRPath[j],self.HRPath[j])
-            #cv2.imwrite("b.png",img_lr)
-            #cv2.imwrite("a.png",img_hr)
-            #print(img_hr.shape)
             img_x , img_y = self.crop(img_lr, img_hr)
-            #cv2.imwrite("a.png",img_y)
             if self.aug :
                 img_x, img_y = self.augment(img_x, img_y)
             img_x = cv2.resize(img_x,self.LRSize,interpolation = cv2.INTER_CUBIC)
@@ -109,7 +93,7 @@ if __name__ == '__main__':
         paths = os.listdir(dir)
         return len(paths)
     data_dir = "data"
-    batchgen = BatchGenerator(96,"LR","HR",True)
+    batchgen = BatchGenerator(96,"val_lr","val_hr",True)
     batch_images_x, batch_images_t = batchgen.getBatch(4)
     x = tileImage(batch_images_x)
     x = (x + 1)*127.5
