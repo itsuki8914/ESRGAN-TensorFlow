@@ -29,23 +29,7 @@ class BatchGenerator:
         if rand > .5:
             img_x = cv2.flip(img_x,1)
             img_y = cv2.flip(img_y,1)
-        """
-        rand = np.random.rand()
-        if rand > 2/3:
-            angle = 90
-        elif rand < 1/3:
-            angle = -90
-        else:
-            angle = 0
-        scale = 1.0
-        center_x = (int(self.LRSize[1]/2), int(self.LRSize[0]/2))
-        trans = cv2.getRotationMatrix2D(center_x, angle , scale)
-        img_x = cv2.warpAffine(img_x, trans, (self.LRSize[1],self.LRSize[0]))
-        center_y = (int(self.HRSize[1]/2), int(self.HRSize[0]/2))
-        trans = cv2.getRotationMatrix2D(center_y, angle , scale)
 
-        img_y = cv2.warpAffine(img_y, trans, (self.HRSize[1],self.HRSize[0]))
-        """
         return img_x, img_y
 
     def crop(self, img_x, img_y):
@@ -58,21 +42,18 @@ class BatchGenerator:
 
     def getBatch(self, bs):
         id = np.random.choice(range(self.datalen),bs)
-        x   = np.zeros( (bs,self.LRSize[0],self.LRSize[1],3), dtype=np.float32)
-        y   = np.zeros( (bs,self.HRSize[0],self.HRSize[1],3), dtype=np.float32)
+        x   = np.zeros( (bs, self.LRSize[0], self.LRSize[1],3), dtype=np.float32)
+        y   = np.zeros( (bs, self.HRSize[0], self.HRSize[1],3), dtype=np.float32)
         for i,j in enumerate(id):
-
             img_lr = self.LRImages[j]
             img_hr = self.HRImages[j]
             img_x , img_y = self.crop(img_lr, img_hr)
             if self.aug :
                 img_x, img_y = self.augment(img_x, img_y)
-            img_x = cv2.resize(img_x,self.LRSize,interpolation = cv2.INTER_CUBIC)
-            img_y = cv2.resize(img_y,self.HRSize,interpolation = cv2.INTER_CUBIC)
+            img_x = cv2.resize(img_x,self.LRSize, interpolation = cv2.INTER_CUBIC)
+            img_y = cv2.resize(img_y,self.HRSize, interpolation = cv2.INTER_CUBIC)
             x[i,:,:,:] = (img_x - 127.5) / 127.5
             y[i,:,:,:] = (img_y - 127.5) / 127.5
-
-
         return x, y
 
 if __name__ == '__main__':
@@ -93,7 +74,7 @@ if __name__ == '__main__':
         paths = os.listdir(dir)
         return len(paths)
     data_dir = "data"
-    batchgen = BatchGenerator(96,"val_lr","val_hr",True)
+    batchgen = BatchGenerator(96,"train_lr","train_hr",True)
     batch_images_x, batch_images_t = batchgen.getBatch(4)
     x = tileImage(batch_images_x)
     x = (x + 1)*127.5

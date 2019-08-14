@@ -9,7 +9,6 @@ def _fc_variable( weight_shape,name="fc"):
         output_channels = int(weight_shape[1])
         weight_shape    = (input_channels, output_channels)
         regularizer = tf.contrib.layers.l2_regularizer(scale=REGULARIZER_COF)
-
         # define variables
         weight = tf.get_variable("w", weight_shape     ,
                                 initializer=tf.contrib.layers.xavier_initializer(),
@@ -38,7 +37,6 @@ def _conv_variable( weight_shape,name="conv"):
 def _conv2d( x, W, stride):
     return tf.nn.conv2d(x, W, strides = [1, stride, stride, 1], padding = "SAME")
 
-
 def _conv_layer(x, input_layer, output_layer, stride, filter_size=3, name="conv", isTraining=True):
     conv_w, conv_b = _conv_variable([filter_size,filter_size,input_layer,output_layer],name="conv_"+name)
     h = _conv2d(x,conv_w,stride=stride) + conv_b
@@ -54,11 +52,12 @@ def _conv_layer_g(x, input_layer, output_layer, stride=1, filter_size=3, act=Tru
     return h
 
 def _up_sampling(x, ratio=2):
-    bs, h, w, c = x.get_shape().as_list()
-    #h = tf.image.resize_nearest_neighbor(x,[h*2,w*2])
-    #h = tf.image.resize_bicubic(x,[h*2,w*2])
-    h = tf.image.resize_bilinear(x, [h*ratio, w*ratio])
+    #h = tf.image.resize_nearest_neighbor(x, [tf.shape(x)[1]*ratio, tf.shape(x)[2]*ratio])
+    #h = tf.image.resize_bicubic(x, [tf.shape(x)[1]*ratio, tf.shape(x)[2]*ratio])
+    h = tf.image.resize_bilinear(x, [tf.shape(x)[1]*ratio, tf.shape(x)[2]*ratio])
     return h
+
+# paper
 """
 def _dense_block(x,in_layer=64,hidden=32,beta=0.2):
     h1 = _conv_layer_g(x, in_layer, hidden,name="h1")
@@ -96,7 +95,6 @@ def _RRDB(x,in_layer=64,hidden=32,beta=0.2,name="rrdb"):
     return out * beta + x
 
 def buildESRGAN_g(x,reuse=False,isTraining=True):
-
     with tf.variable_scope("ESRGAN_g", reuse=reuse) as scope:
         if reuse: scope.reuse_variables()
 
@@ -106,6 +104,7 @@ def buildESRGAN_g(x,reuse=False,isTraining=True):
 
         tmp = h
 
+        #in paper uses 15 blocks
         for i in range(8):
             h = _RRDB(h,name="rrdb%d"%(i))
 

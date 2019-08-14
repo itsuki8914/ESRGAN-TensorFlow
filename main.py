@@ -54,7 +54,6 @@ def foloderLength(folder):
 def main():
     img_size = 96
     bs = 4
-    val_size = 4
     trans_lr = 1e-4
 
     start = time.time()
@@ -62,6 +61,7 @@ def main():
     batchgen = BatchGenerator(img_size=img_size,LRDir=TRAIN_LR_DIR,HRDir=TRAIN_HR_DIR,aug=True)
     valgen = BatchGenerator(img_size=img_size,LRDir=VAL_LR_DIR,HRDir=VAL_HR_DIR,aug=False)
 
+    #save samples
     IN_ , OUT_ = batchgen.getBatch(4)[:4]
     print(IN_.shape)
     IN_ = tileImage(IN_)
@@ -70,7 +70,6 @@ def main():
     OUT_ = tileImage(OUT_)
     OUT_ = cv2.resize(OUT_,(img_size*4*2,img_size*4*2))
     OUT_ = (OUT_ + 1)*127.5
-
     Z_ = np.concatenate((IN_,OUT_), axis=1)
     cv2.imwrite("input.png",Z_)
     print("%s sec took sampling"%(time.time()-start))
