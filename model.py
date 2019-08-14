@@ -104,7 +104,7 @@ def buildESRGAN_g(x,reuse=False,isTraining=True):
 
         tmp = h
 
-        #in paper uses 15 blocks
+        # original paper uses 15 blocks
         for i in range(8):
             h = _RRDB(h,name="rrdb%d"%(i))
 
