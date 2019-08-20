@@ -11,7 +11,7 @@ see also [my SRGAN implementation.](https://github.com/itsuki8914/SRGAN-TensorFl
 
 1. Download vgg19.npy from [here.](https://github.com/machrisaa/tensorflow-vgg)
 
-  Put vgg19.npy in the folder where convert.py and convert.py are located.
+  Put vgg19.npy in the folder where convert.py and vgg.py are located.
   
   like this
 ```
