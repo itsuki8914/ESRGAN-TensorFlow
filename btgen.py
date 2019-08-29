@@ -2,6 +2,7 @@ import glob
 import cv2
 import numpy as np
 import time
+
 class BatchGenerator:
     def __init__(self, img_size, LRDir, HRDir, aug=False):
         self.LRPath = glob.glob(LRDir + "/*.png")
