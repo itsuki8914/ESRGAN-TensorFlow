@@ -9,7 +9,7 @@ from main import *
 from model import *
 DATASET_DIR = "data"
 VAL_DIR ="val"
-SAVE_DIR = "modelgan"
+SAVE_DIR = "modelGAN"
 OUT_DIR = "outputgan"
 
 def main(folder="test"):

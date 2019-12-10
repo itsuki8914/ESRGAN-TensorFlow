@@ -5,8 +5,8 @@ import time
 
 class BatchGenerator:
     def __init__(self, img_size, LRDir, HRDir, aug=False):
-        self.LRPath = glob.glob(LRDir + "/*.png")
-        self.HRPath = glob.glob(HRDir + "/*.png")
+        self.LRPath = sorted(glob.glob(LRDir + "/*.png"))   # fix input imgs error
+        self.HRPath = sorted(glob.glob(HRDir + "/*.png"))
         print("read images")
         start = time.time()
         self.LRImages = [cv2.imread(img_path) for img_path in self.LRPath]
