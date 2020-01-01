@@ -122,7 +122,7 @@ python pred.py test
 
 ## Result examples
 
-LR and HR images from[jbhuang0604/SelfExSR].(https://github.com/jbhuang0604/SelfExSR)
+LR and HR images from [jbhuang0604/SelfExSR](https://github.com/jbhuang0604/SelfExSR).
 
 leftmost: bicubic upsampling
 
